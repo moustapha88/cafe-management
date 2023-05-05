@@ -1,5 +1,7 @@
 package sn.example.cafemanagement.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import sn.example.cafemanagement.constents.CafeConstants;
 import sn.example.cafemanagement.rest.UserRest;
 import sn.example.cafemanagement.service.UserService;
 import sn.example.cafemanagement.utils.CafeUtils;
+import sn.example.cafemanagement.wrapper.UserWrapper;
 
 @RestController
 public class UserController implements UserRest{
@@ -37,6 +40,26 @@ public class UserController implements UserRest{
         }
        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    @Override
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+        try {
+            return userService.getAllUsers();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<List<UserWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> update(Map<String, String> requestMap) {
+        try {
+            return userService.update(requestMap);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<String>(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
 }

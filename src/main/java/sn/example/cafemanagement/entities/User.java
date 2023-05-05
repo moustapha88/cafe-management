@@ -11,6 +11,14 @@ import lombok.Data;
 
 @NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email=:email")
 
+@NamedQuery(name = "User.getAllUser", query = "select new sn.example.cafemanagement.wrapper.UserWrapper(u.id,u.username,u.email,u.contactNumber,u.status) from User u where u.role=:user")
+
+@NamedQuery(name = "User.getAllAdmin", query = "select u.email from User u where u.role=:admin")
+
+@NamedQuery(name = "User.updateStatus", query = "update User u set u.status=:status where u.id=:id")
+
+
+
 @Data
 @DynamicInsert
 @DynamicUpdate
