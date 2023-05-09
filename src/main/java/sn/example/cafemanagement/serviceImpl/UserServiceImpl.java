@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
         try {
-            User userObj = userDao.findByEmail(jwtFilter.getCurrentUser());
+            User userObj = userDao.findByUsername(jwtFilter.getCurrentUser());
             if(!userObj.equals(null)){
                 if(userObj.getPassword().equals(requestMap.get("oldPassword"))){
                     userObj.setPassword(requestMap.get("newPassword"));
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
         try {
-            User user = userDao.findByEmail(requestMap.get("email"));
+            User user = userDao.findByEmailId(requestMap.get("email"));
             if(!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())){
                 emailUtils.forgotPassword(user.getEmail(), "Credential by Cafe Management System", user.getPassword());
             }
